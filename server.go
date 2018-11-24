@@ -1,15 +1,30 @@
 package main
 
-//StartIP
+import (
+	"net/http"
+	"os"
+)
 
-func Get() string {
-	return "GetStartIP"
+// URL - структура адреса
+type URL struct {
+	Name string
+	IP   string
+	Port string
 }
 
-func Ping() {
+// URLRequestGet - Запрос на указанный адрес.
+// Возращает статус кода ответа (type string)
+func (u *URL) URLRequestGet() string {
+	response, err := http.Get(u.Name)
+	if err != nil {
+		os.Exit(1)
+		return "Error get !"
+	}
+
+	defer response.Body.Close()
+	return response.Status
 
 }
 
-func Push() {
-
-}
+func (u *URL) URLRequestPing() string { return "" }
+func (u *URL) URLRequestPUT() string  { return "" }
