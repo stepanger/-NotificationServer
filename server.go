@@ -1,15 +1,14 @@
 package main
 
 import (
+	"log"
 	"net/http"
-	"os"
+	"os/exec"
 )
 
 // URL - структура адреса
 type URL struct {
-	Name string
-	IP   string
-	Port string
+	Name, IP, Port string
 }
 
 // URLRequestGet - Запрос на указанный адрес.
@@ -17,7 +16,6 @@ type URL struct {
 func (u *URL) URLRequestGet() string {
 	response, err := http.Get(u.Name)
 	if err != nil {
-		os.Exit(1)
 		return "Error get !"
 	}
 
@@ -26,5 +24,17 @@ func (u *URL) URLRequestGet() string {
 
 }
 
-func (u *URL) URLRequestPing() string { return "" }
-func (u *URL) URLRequestPUT() string  { return "" }
+// URLRequestPing - Ping указанного IP.
+// Использует exec.Command возвращает статус (type []byte)
+func (u *URL) URLRequestPing() []byte {
+	out, err := exec.Command("ping", u.IP, "-c 3", "-i 2", "-w 10").Output()
+
+	if err != nil {
+		log.Fatalf("STATUS ERROR %s", err)
+	}
+
+	return out
+
+}
+
+func (u *URL) URLRequestPUT() string { return "" }

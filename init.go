@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // Адрес сервер или домен (множество)
 // -- Ping по адресу
@@ -14,9 +16,13 @@ func main() {
 
 	url := &URL{
 		"https://www.google.ru",
-		"209.185.108.134",
+		"192.168.1.1", //проверь с url
 		"8000",
 	}
 
 	fmt.Println(url.URLRequestGet())
+	fmt.Printf("%s", url.URLRequestPing())
+
+	//out.Run() //.Output()
+
 }
