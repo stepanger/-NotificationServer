@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"os/exec"
 )
 
 // Адрес сервер или домен (множество)
@@ -23,7 +22,6 @@ func main() {
 	fmt.Println(url.URLRequestGet())
 	fmt.Printf("%s", url.URLRequestPing())
 
-	cmd := exec.Command("notify-send", "string")
-	cmd.Run()
+	NotifyLinux("Ошибка подключения сервер не отвечает")
 
 }

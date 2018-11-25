@@ -1,3 +1,10 @@
 package main
 
-func Notify() string { return "" }
+import (
+	"os/exec"
+)
+
+func NotifyLinux(status string) {
+	cmd := exec.Command("notify-send", status)
+	cmd.Run()
+}

@@ -31,7 +31,7 @@ func (u *URL) URLRequestPing() []byte {
 	if err != nil {
 		log.Fatal(err)
 	}
-	out, err := exec.Command("ping", ur.Host, "-c 3", "-i 2", "-w 10").Output()
+	out, err := exec.Command("ping", ur.Host, "-c 1", "-i 2", "-w 10").Output()
 	if err != nil {
 		log.Fatalf("STATUS ERROR %s", err)
 	}
