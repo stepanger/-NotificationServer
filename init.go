@@ -16,13 +16,11 @@ func main() {
 
 	url := &URL{
 		"https://www.google.ru",
-		"192.168.1.1", //проверь с url
-		"8000",
+		"google",
 	}
 
 	fmt.Println(url.URLRequestGet())
 	fmt.Printf("%s", url.URLRequestPing())
 
 	//out.Run() //.Output()
-
 }
