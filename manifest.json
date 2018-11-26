@@ -1,3 +1,5 @@
 {
-  "serverIP": "127.0.0.1"
+  "name_host": "google inc",
+  "http_url_host": "https://www.google.com",
+  "request_frequency": 1500
 }

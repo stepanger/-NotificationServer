@@ -14,13 +14,13 @@ type URL struct {
 
 // URLRequestGet - Запрос на указанный адрес.
 // Возращает статус кода ответа (type string)
-func (u *URL) URLRequestGet() string {
+func (u *URL) URLRequestGet() (string, bool) {
 	response, err := http.Get(u.URLandIP)
 	if err != nil {
-		return "Error get !"
+		return u.Name + " HTTP Ошибка запроса => URLRequestGet()", true
 	}
 	defer response.Body.Close()
-	return response.Status
+	return u.Name + " HTTP Запрос => " + response.Status, false
 }
 
 // URLRequestPing - Ping указанного URL.
