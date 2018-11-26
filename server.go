@@ -7,7 +7,6 @@ import (
 	"os/exec"
 )
 
-// URL - структура адреса
 type URL struct {
 	URLandIP, Name string
 }
