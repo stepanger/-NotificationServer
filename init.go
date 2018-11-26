@@ -5,21 +5,20 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"time"
 )
 
-// Конфиг
-// Адрес сервер или домен (множество)
-// -- Ping по адресу
-// -- Запрос Get, PUT,
-// Частота проверки
-// Уведомление на email
-// Уведомление в вк
-// Команда после сбоя + bash
-
+/*
+ Конфиг
+ Адрес сервер или домен (множество)
+ -- Ping по адресу
+ -- Запрос Get, PUT,
+ Частота проверки
+ Уведомление на email
+ Уведомление в вк
+ Команда после сбоя + bash
+*/
 func main() {
-
-	//fmt.Println(url.URLRequestGet())
-	//fmt.Printf("%s", url.URLRequestPing())
 
 	content, err := ioutil.ReadFile("manifest.json")
 	if err != nil {
@@ -35,6 +34,13 @@ func main() {
 	}
 
 	fmt.Println(url.URLRequestGet())
-	fmt.Printf("%s", url.URLRequestPing())
 
+	ticker := time.NewTicker(2000 * time.Millisecond)
+	go func() {
+		for _ = range ticker.C {
+			fmt.Println(url.URLRequestGet())
+		}
+	}()
+	time.Sleep(time.Hour * 720)
+	ticker.Stop()
 }

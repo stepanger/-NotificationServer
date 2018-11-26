@@ -1,5 +1,5 @@
 {
   "name_host": "google inc",
-  "http_url_host": "https://www.google.com",
+  "http_url_host": "http://192.168.1.1",
   "request_frequency": 1500
 }
