@@ -8,16 +8,6 @@ import (
 	"time"
 )
 
-/*
- Конфиг
- Адрес сервер или домен (множество)
- -- Ping по адресу
- -- Запрос Get, PUT,
- Частота проверки
- Уведомление на email
- Уведомление в вк
- Команда после сбоя + bash
-*/
 func main() {
 
 	content, err := ioutil.ReadFile("manifest.json")
@@ -33,14 +23,15 @@ func main() {
 		result["name_host"].(string),
 	}
 
-	fmt.Println(url.URLRequestGet())
+	// перевод request_frequency в тип time.Duration, значение в секундах
+	second := time.Duration(result["request_frequency"].(float64)) * time.Second
 
-	ticker := time.NewTicker(2000 * time.Millisecond)
-	go func() {
-		for _ = range ticker.C {
-			fmt.Println(url.URLRequestGet())
-		}
-	}()
-	time.Sleep(time.Hour * 720)
-	ticker.Stop()
+	timeStartTick(*url, second)
+}
+
+func timeStartTick(url URL, second time.Duration) {
+	for {
+		fmt.Println(url.URLRequestGet())
+		time.Sleep(second)
+	}
 }
