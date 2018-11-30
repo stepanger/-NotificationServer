@@ -3,5 +3,6 @@
   "http_url_host": "https://www.google.com/",
   "reguest_ping": true,
   "reguest_http_get": true,
-  "request_frequency": 1
+  "request_frequency": 1,
+  "failed_attempts": 4
 }

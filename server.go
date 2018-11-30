@@ -23,19 +23,20 @@ const (
 	respHeaderTime time.Duration = time.Second * 10 // Ожидание ответа http заголовка
 )
 
-// URLRequestGet - Запрос на указанный адрес.
+// URLRequestGet - Выполняет GET запрос на указанный адрес.
 // Возращает статус кода ответа (type string)
-// В случаи ошибки статус ответа (type error)
+// В случаи ошибки статус ответа + (error)
 func (u *URL) URLRequestGet() (string, error) {
 
+	// Проверка адреса
 	_, err := url.Parse(u.URLandIP)
 	if err != nil {
 		return statusParse + " " + u.URLandIP, err
 	}
 
-	// Переменная client для сброса дефолтных значение конфигурации
-	// клиента.
-	// Задержка запроса Timeout (по умалчанию = ~ бесконечно)
+	// Переменная client для сброса дефолтных значение
+	// конфигурации клиента. Задержка запроса
+	// Timeout (по умалчанию = ~ бесконечно)
 	// приводит к зависание рутины.
 	// Установить значение respHeaderTime в пределах от 5 - 10 секунд
 	var client = &http.Client{
@@ -49,6 +50,7 @@ func (u *URL) URLRequestGet() (string, error) {
 		},
 	}
 
+	// Запрос на сервер
 	resp, err := client.Get(u.URLandIP)
 	if err != nil {
 		return u.Name + statusError, err
@@ -56,17 +58,19 @@ func (u *URL) URLRequestGet() (string, error) {
 
 	defer resp.Body.Close()
 
+	// Сравнение с статус кода 200
 	if resp.StatusCode != http.StatusOK {
 		return u.Name + statusError, err
 	}
-	return u.Name + "\n" + statusSucces + resp.Status, nil
+	return u.Name + statusSucces + resp.Status, nil
 }
 
-// URLRequestPing - Ping указанного URL.
+// URLRequestPing - ping указанного URL.
 // Использует exec.Command возвращает статус (type string)
 // В случаи ошибки статус ответа (type error)
 func (u *URL) URLRequestPing() (string, error) {
 
+	// Парсинг для коректности url и сохранения домена
 	urlParse, err := url.Parse(u.URLandIP)
 	if err != nil {
 		return statusParse + " " + u.URLandIP, err
@@ -76,5 +80,5 @@ func (u *URL) URLRequestPing() (string, error) {
 	if err != nil {
 		return statusPing, err
 	}
-	return succesPing + "OK", nil
+	return u.Name + succesPing + "OK", nil
 }
