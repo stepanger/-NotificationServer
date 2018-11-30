@@ -32,14 +32,16 @@ func main() {
 	}
 
 	timeStartTick(*url, second, getIP)
+
 }
 
 func timeStartTick(url URL, second time.Duration, getIP map[string]bool) int {
+
 	for {
 		switch {
 		case getIP["Ping"] && getIP["Get"]:
-			fmt.Println(url.URLRequestGet())
-			fmt.Println(url.URLRequestPing())
+			fmt.Printf(url.URLRequestGet())
+			fmt.Printf(url.URLRequestPing())
 		case getIP["Ping"]:
 			fmt.Println(url.URLRequestPing())
 		case getIP["Get"]:

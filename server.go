@@ -16,7 +16,7 @@ type URL struct {
 
 const (
 	statusError    string        = " HTTP Ошибка запроса => "
-	statusSucces   string        = " HTTP Успех запроса => "
+	statusSucces   string        = " HTTP Успех => "
 	statusParse    string        = " URL (statusParse) Некоректный адрес => "
 	statusPing     string        = " PING (exec.command(ping)) Ошибка запроса => "
 	succesPing     string        = " PING Успех => "
@@ -27,6 +27,11 @@ const (
 // Возращает статус кода ответа (type string)
 // В случаи ошибки статус ответа (type error)
 func (u *URL) URLRequestGet() (string, error) {
+
+	_, err := url.Parse(u.URLandIP)
+	if err != nil {
+		return statusParse + " " + u.URLandIP, err
+	}
 
 	// Переменная client для сброса дефолтных значение конфигурации
 	// клиента.
@@ -62,14 +67,14 @@ func (u *URL) URLRequestGet() (string, error) {
 // В случаи ошибки статус ответа (type error)
 func (u *URL) URLRequestPing() (string, error) {
 
-	ur, err := url.Parse(u.URLandIP)
+	urlParse, err := url.Parse(u.URLandIP)
 	if err != nil {
-		return statusParse, err
+		return statusParse + " " + u.URLandIP, err
 	}
-	_, err = exec.Command("ping", ur.Host, "-c 1", "-i 2", "-w 10").Output()
+
+	_, err = exec.Command("ping", urlParse.Host, "-c 1", "-i 2", "-w 10").Output()
 	if err != nil {
 		return statusPing, err
 	}
-	//s := string(out[:])
-	return succesPing + ur.Host, nil
+	return succesPing + "OK", nil
 }
