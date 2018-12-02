@@ -4,5 +4,10 @@
   "reguest_ping": true,
   "reguest_http_get": true,
   "request_frequency": 1,
-  "failed_attempts": 4
+  "failed_attempts": 4,
+  "gmail_notification": {
+    "sender":"...@gmail.com",
+    "passSender":"password",
+    "recipient":"...@gmail.com"
+  }
 }
