@@ -37,6 +37,8 @@ func main() {
 
 func timeStartTick(url URL, second time.Duration, getIP map[string]bool) int {
 
+	asd := failure()
+
 	for {
 		switch {
 		case getIP["Ping"] && getIP["Get"]:
@@ -45,11 +47,28 @@ func timeStartTick(url URL, second time.Duration, getIP map[string]bool) int {
 		case getIP["Ping"]:
 			fmt.Println(url.URLRequestPing())
 		case getIP["Get"]:
+
+			_, err := url.URLRequestGet()
+
+			if err != nil {
+				if asd() == 10 {
+					NotifyLinux("Сервер не отвечает")
+				}
+			}
+
 			fmt.Println(url.URLRequestGet())
 		default:
 			fmt.Printf("\n\n ***Нечего отправлять!*** \n\n")
 			return 0
 		}
 		time.Sleep(second)
+	}
+}
+
+func failure() func() int {
+	var x int //0
+	return func() int {
+		x++
+		return x
 	}
 }
