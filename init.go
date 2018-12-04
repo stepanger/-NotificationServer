@@ -23,6 +23,10 @@ func main() {
 		result["name_host"].(string),
 	}
 
+	gmail := &Gmail{
+		result["gmail_notification"].(string),
+	}
+
 	// перевод request_frequency в тип time.Duration, значение в секундах
 	second := time.Duration(result["request_frequency"].(float64)) * time.Second
 
@@ -31,11 +35,11 @@ func main() {
 		"Get":  result["reguest_http_get"].(bool),
 	}
 
-	timeStartTick(*url, second, getIP)
+	timeStartTick(*url, *gmail, second, getIP)
 
 }
 
-func timeStartTick(url URL, second time.Duration, getIP map[string]bool) int {
+func timeStartTick(url URL, gmail Gmail, second time.Duration, getIP map[string]bool) int {
 
 	asd := failure()
 
@@ -53,6 +57,7 @@ func timeStartTick(url URL, second time.Duration, getIP map[string]bool) int {
 			if err != nil {
 				if asd() == 10 {
 					NotifyLinux("Сервер не отвечает")
+					gmail.SendingMessGmail("Ошибка запроса сервер не отвечает")
 				}
 			}
 

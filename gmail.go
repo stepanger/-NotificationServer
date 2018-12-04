@@ -3,12 +3,12 @@ package main
 import (
 	"log"
 	"net/smtp"
+	"os"
 )
 
-type gmail struct {
-	sender     string //Отправитель
-	passSender string //Пароль отправителя от почты gmail
-	recipient  string //Получатель
+// Gmail Получатель почты
+type Gmail struct {
+	recipient string //Получатель
 }
 
 const (
@@ -19,15 +19,15 @@ const (
 
 // SendingMessGmail - Отправка сообщения через почту Gmail
 // Использует аторизацию с помощью PlainAuth и отправку через
-// SendMail()
-func (g *gmail) SendingMessGmail(mess string) {
+// SendMail(). Значение отправителя береться из .bashrc
+func (g *Gmail) SendingMessGmail(mess string) {
 
 	err := smtp.SendMail(smtpServ+smtpPort,
 		smtp.PlainAuth("",
-			g.sender,
-			g.passSender,
+			os.Getenv("GmailUser"),
+			os.Getenv("GmailPass"),
 			smtpServ),
-		g.sender,
+		os.Getenv("GmailUser"),
 		[]string{g.recipient},
 		[]byte(subject+mess))
 

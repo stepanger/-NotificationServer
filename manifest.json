@@ -1,13 +1,9 @@
 {
   "name_host": "google inc",
-  "http_url_host": "https://www.google.com/",
+  "http_url_host": "https://www.67ttttt.com/",
   "reguest_ping": false,
   "reguest_http_get": true,
   "request_frequency": 1,
   "failed_attempts": 4,
-  "gmail_notification": {
-    "sender":"...@gmail.com",
-    "passSender":"password",
-    "recipient":"...@gmail.com"
-  }
+  "gmail_notification": "creadtive472@gmail.com"
 }
