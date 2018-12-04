@@ -28,7 +28,7 @@ func TimeStartTick(result map[string]interface{}, second time.Duration) int {
 			if err != nil {
 				if effort() == fail {
 					NotifyLinux("Сервер не отвечает")
-					gmail.SendingMessGmail("Ошибка запроса сервер не отвечает <br>" + log)
+					gmail.SendingMessGmail(log)
 				}
 			}
 
