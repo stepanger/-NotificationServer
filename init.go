@@ -41,7 +41,7 @@ func main() {
 
 func timeStartTick(url URL, gmail Gmail, second time.Duration, getIP map[string]bool) int {
 
-	asd := failure()
+	asd := Failure(10)
 
 	for {
 		switch {
@@ -67,13 +67,5 @@ func timeStartTick(url URL, gmail Gmail, second time.Duration, getIP map[string]
 			return 0
 		}
 		time.Sleep(second)
-	}
-}
-
-func failure() func() int {
-	var x int //0
-	return func() int {
-		x++
-		return x
 	}
 }
