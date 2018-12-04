@@ -5,9 +5,9 @@ import "os/exec"
 // Failure - число неудачных попыток.
 // С каждой итерацией увеличевает число до предела
 // заданным effort, после сбрасывает x = 0
-func Failure(effort int) func() int {
-	var x int
-	return func() int {
+func Failure(effort float64) func() float64 {
+	var x float64
+	return func() float64 {
 		if effort == x {
 			x = 0
 		} else {

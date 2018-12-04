@@ -4,6 +4,6 @@
   "reguest_ping": false,
   "reguest_http_get": true,
   "request_frequency": 1,
-  "failed_attempts": 4,
+  "failed_attempts": 10,
   "gmail_notification": "creadtive472@gmail.com"
 }
