@@ -15,7 +15,7 @@ type URL struct {
 }
 
 const (
-	statusError    string        = " HTTP Ошибка запроса => "
+	statusError    string        = " HTTP (URLRequestGet) Ошибка запроса => "
 	statusSucces   string        = " HTTP Успех => "
 	statusParse    string        = " URL (statusParse) Некоректный адрес => "
 	statusPing     string        = " PING (exec.command(ping)) Ошибка запроса => "
@@ -78,7 +78,7 @@ func (u *URL) URLRequestPing() (string, error) {
 
 	_, err = exec.Command("ping", urlParse.Host, "-c 1", "-i 2", "-w 10").Output()
 	if err != nil {
-		return statusPing, err
+		return u.Name + statusPing, err
 	}
 	return u.Name + succesPing + "OK", nil
 }

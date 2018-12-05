@@ -17,14 +17,9 @@ func main() {
 	var result map[string]interface{}
 	json.Unmarshal([]byte(content), &result)
 
-	/////////////////////////////////////////////////////////////////////////
-
 	// перевод request_frequency в тип time.Duration, значение в секундах
 	second := time.Duration(result["request_frequency"].(float64)) * time.Second
 
-	/////////////////////////////////////////////////////////////////////////////
-
-	//	timeStartTick(*url, *gmail, second, getIP)
 	TimeStartTick(result, second)
 
 }

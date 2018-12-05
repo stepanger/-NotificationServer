@@ -5,6 +5,9 @@ import (
 	"time"
 )
 
+// TimeStartTick - итерация запросов на сервер
+// result принимает параметры в формате json
+// second задержка цикла for
 func TimeStartTick(result map[string]interface{}, second time.Duration) int {
 
 	url := &URL{
@@ -23,19 +26,28 @@ func TimeStartTick(result map[string]interface{}, second time.Duration) int {
 	effort := Failure(fail)
 
 	for {
+		effort := effort()
+
 		if get {
 			log, err := url.URLRequestGet()
 			if err != nil {
-				if effort() == fail {
-					NotifyLinux("Сервер не отвечает")
-					gmail.SendingMessGmail(log)
+				if effort == fail {
+					NotifyLinux("Get Сервер не отвечает")
+					gmail.SendingMessGmail("GET " + log + err.Error())
 				}
 			}
 
-			fmt.Printf(log)
+			fmt.Printf(log + "\n")
 		}
 		if ping {
-			fmt.Printf(url.URLRequestPing())
+			log, err := url.URLRequestPing()
+			if err != nil {
+				if effort == fail {
+					NotifyLinux("Ping Сервер не отвечает")
+					gmail.SendingMessGmail("PING " + log + err.Error())
+				}
+			}
+			fmt.Printf(log + "\n")
 		}
 		if !get && !ping {
 			fmt.Printf("\n\n ***Все запросы отключены!*** \n\n")
