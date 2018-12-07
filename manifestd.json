@@ -1,7 +1,7 @@
 {
   "name_host": "google inc",
-  "http_url_host": "https://www.67ttttt.com/",
-  "reguest_ping": false,
+  "http_url_host": "https://www.google.com/",
+  "reguest_ping": true,
   "reguest_http_get": true,
   "request_frequency": 1,
   "failed_attempts": 10,
