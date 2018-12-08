@@ -31,6 +31,7 @@ func TimeStartTick(result map[string]interface{}, second time.Duration) int {
 		if get {
 			log, err := url.URLRequestGet()
 			if err != nil {
+				Error.Println(err)
 				if effort == fail {
 					NotifyLinux("Get Сервер не отвечает")
 					gmail.SendingMessGmail("GET " + log + err.Error())
