@@ -7,18 +7,18 @@ import (
 
 // Gmail Получатель почты
 type Gmail struct {
-	recipient string //Получатель
+	Recipient string //Получатель
 }
 
 const (
-	subject  string = "Subject: NotificationServer\n\n"
+	subject  string = "Subject: NotificationServer"
 	smtpServ string = "smtp.gmail.com"
 	smtpPort string = ":587"
 )
 
 // SendingMessGmail - Отправка сообщения через почту Gmail
 // Использует аторизацию с помощью PlainAuth и отправку через
-// SendMail(). Значение отправителя береться из .bashrc
+// SendMail(). Авторизация отправителя береться из .bashrc
 func (g *Gmail) SendingMessGmail(mess string) {
 
 	err := smtp.SendMail(smtpServ+smtpPort,
@@ -27,7 +27,7 @@ func (g *Gmail) SendingMessGmail(mess string) {
 			os.Getenv("GmailPass"),
 			smtpServ),
 		os.Getenv("GmailUser"),
-		[]string{g.recipient},
+		[]string{g.Recipient},
 		[]byte(subject+mess))
 
 	if err != nil {
