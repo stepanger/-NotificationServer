@@ -6,10 +6,14 @@ Linux 4.15.0-39-generic #42-Ubuntu SMP Tue  x86_64
 #### Стадия (Pre-Alpha)
 [![Go Report Card](https://goreportcard.com/badge/github.com/stepanger/NotificationServer)](https://goreportcard.com/report/github.com/stepanger/NotificationServer)
 
-Проверяет есть ли отклик от сервера или web-приложения. Manifest.json основной конфик приложения.
+Простое client приложение, которое посылает запрос на сервер или web-приложение каждый раз через определенный промежуток времени, в случае неудачной попытки посылает уведомление клиенту.
+
+Возможности:
 - Запрос GET
 - Ping адреса
-- Уведомление при сбое Gmail, Notify-send
+- Частота запросов
+- Лог Запросов
+- Уведомление в Gmail, Notify-send (при сбое)
 
 #### Установка (Linux)
 #### Переменные окружения для Gmail
