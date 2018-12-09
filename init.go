@@ -5,7 +5,6 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
-	"time"
 )
 
 func main() {
@@ -13,14 +12,15 @@ func main() {
 	// Лог приложения
 	errorHandle, err := os.OpenFile("NS_err.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
-		log.Println(err)
+		log.Fatal(err)
 	}
-	defer errorHandle.Close()
 
 	infoHandle, err := os.OpenFile("NS_info.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
-		log.Println(err)
+		log.Fatal(err)
 	}
+
+	defer errorHandle.Close()
 	defer infoHandle.Close()
 
 	InitlogFile(errorHandle, infoHandle)
@@ -29,24 +29,18 @@ func main() {
 	//
 	//
 	// Конфигурация
-	content, err := ioutil.ReadFile("manifest.json")
+	manifest, err := ioutil.ReadFile("manifest.json")
 	if err != nil {
 		log.Fatal(err)
 	}
 	var result map[string]interface{}
-	json.Unmarshal([]byte(content), &result)
-	//
-	//
-	//
-	//
-	// перевод request_frequency в тип time.Duration, значение в секундах
-	second := time.Duration(result["request_frequency"].(float64)) * time.Second
+	json.Unmarshal([]byte(manifest), &result)
 	//
 	//
 	//
 	//
 	//
 	// Итерация запросов
-	TimeStartTick(result, second)
+	TimeStartTick(result)
 
 }

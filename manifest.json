@@ -1,6 +1,6 @@
 {
   "name_host": "google inc",
-  "http_url_host": "https://www.googlasdasdase.com/",
+  "http_url_host": "https://www.google.com/",
   "reguest_ping": true,
   "reguest_http_get": true,
   "request_frequency": 1,

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"net/smtp"
 	"os"
 )
@@ -32,8 +31,7 @@ func (g *Gmail) SendingMessGmail(mess string) {
 		[]byte(subject+mess))
 
 	if err != nil {
-		log.Printf("smtp error: %s", err)
+		Error.Println("smtp error: ", err)
 		return
 	}
-
 }

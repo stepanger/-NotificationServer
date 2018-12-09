@@ -1,14 +1,15 @@
 package main
 
 import (
-	"fmt"
 	"time"
 )
 
 // TimeStartTick - итерация запросов на сервер
 // result принимает параметры в формате json
 // second задержка цикла for
-func TimeStartTick(result map[string]interface{}, second time.Duration) int {
+func TimeStartTick(result map[string]interface{}) int {
+
+	second := time.Duration(result["request_frequency"].(float64)) * time.Second
 
 	url := &URL{
 		result["http_url_host"].(string),
@@ -31,27 +32,29 @@ func TimeStartTick(result map[string]interface{}, second time.Duration) int {
 		if get {
 			log, err := url.URLRequestGet()
 			if err != nil {
-				Error.Println(err)
+				Error.Println(log, err)
 				if effort == fail {
 					NotifyLinux("Get Сервер не отвечает")
 					gmail.SendingMessGmail("GET " + log + err.Error())
 				}
+			} else {
+				Info.Println(log)
 			}
-
-			fmt.Printf(log + "\n")
 		}
 		if ping {
 			log, err := url.URLRequestPing()
 			if err != nil {
+				Error.Println(log, err)
 				if effort == fail {
 					NotifyLinux("Ping Сервер не отвечает")
 					gmail.SendingMessGmail("PING " + log + err.Error())
 				}
+			} else {
+				Info.Println(log)
 			}
-			fmt.Printf(log + "\n")
 		}
 		if !get && !ping {
-			fmt.Printf("\n\n ***Все запросы отключены!*** \n\n")
+			Info.Println("***Все запросы отключены!***")
 			return 0
 		}
 		time.Sleep(second)
