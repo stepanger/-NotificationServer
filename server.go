@@ -29,7 +29,7 @@ const (
 func (u *URL) URLRequestGet() (string, error) {
 
 	// Проверка адреса
-	_, err := url.Parse(u.URLandIP)
+	_, err := url.ParseRequestURI(u.URLandIP)
 	if err != nil {
 		return statusParse + " " + u.URLandIP, err
 	}
