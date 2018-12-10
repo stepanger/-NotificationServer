@@ -2,36 +2,46 @@ package main
 
 import (
 	"net/smtp"
-	"os"
 )
 
 // Gmail Получатель почты
 type Gmail struct {
-	Recipient string //Получатель
+	MailRecipient  string //Получатель
+	Mailer         string //Отправитель .bashrc
+	SenderPassword string //Пароль отправителя .bashrc
 }
 
 const (
-	subject    string = "Subject: NotificationServer"
+	subject    string = "Subject: NotificationServer\r\n\r\n"
 	smtpServer string = "smtp.gmail.com"
 	smtpPort   string = ":587"
 )
 
 // SendingMessGmail - Отправка сообщения через почту Gmail
 // Использует аторизацию с помощью PlainAuth и отправку через
-// SendMail(). Авторизация отправителя береться из .bashrc
-func (g *Gmail) SendingMessGmail(mess string) {
+// SendMail().
+func (g *Gmail) SendingMessGmail(mess string, authGmail smtp.Auth) {
 
 	err := smtp.SendMail(smtpServer+smtpPort,
-		smtp.PlainAuth("",
-			os.Getenv("GmailUser"),
-			os.Getenv("GmailPass"),
-			smtpServer),
-		os.Getenv("GmailUser"),
-		[]string{g.Recipient},
-		[]byte(subject+mess))
+		authGmail,
+		g.Mailer,
+		[]string{g.MailRecipient},
+		[]byte("To: Admin\r\n"+subject+mess))
 
 	if err != nil {
 		Error.Println("smtp error: ", err)
 		return
 	}
+}
+
+// AuthenticationUser - Авторизация пользователя Gmail
+// Авторизация береться из .bashrc
+func (g *Gmail) AuthenticationUser() smtp.Auth {
+	authGmail := smtp.PlainAuth(
+		"",
+		g.Mailer,
+		g.SenderPassword,
+		smtpServer,
+	)
+	return authGmail
 }

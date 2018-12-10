@@ -1,6 +1,7 @@
 package main
 
 import (
+	"os"
 	"time"
 )
 
@@ -18,6 +19,8 @@ func TimeStartTick(result map[string]interface{}) int {
 
 	gmail := &Gmail{
 		result["gmail_notification"].(string),
+		os.Getenv("GmailUser"),
+		os.Getenv("GmailPass"),
 	}
 
 	ping := result["reguest_ping"].(bool)
@@ -25,6 +28,8 @@ func TimeStartTick(result map[string]interface{}) int {
 	fail := result["failed_attempts"].(float64)
 
 	effort := Failure(fail)
+
+	user := gmail.AuthenticationUser()
 
 	for {
 		effort := effort()
@@ -35,7 +40,7 @@ func TimeStartTick(result map[string]interface{}) int {
 				Error.Println(log, err)
 				if effort == fail {
 					NotifyLinux("Get Сервер не отвечает")
-					gmail.SendingMessGmail("GET " + log + err.Error())
+					gmail.SendingMessGmail("GET "+log+err.Error(), user)
 				}
 			} else {
 				Info.Println(log)
@@ -47,7 +52,7 @@ func TimeStartTick(result map[string]interface{}) int {
 				Error.Println(log, err)
 				if effort == fail {
 					NotifyLinux("Ping Сервер не отвечает")
-					gmail.SendingMessGmail("PING " + log + err.Error())
+					gmail.SendingMessGmail("PING "+log+err.Error(), user)
 				}
 			} else {
 				Info.Println(log)
