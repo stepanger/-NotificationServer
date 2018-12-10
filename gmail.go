@@ -11,9 +11,9 @@ type Gmail struct {
 }
 
 const (
-	subject  string = "Subject: NotificationServer"
-	smtpServ string = "smtp.gmail.com"
-	smtpPort string = ":587"
+	subject    string = "Subject: NotificationServer"
+	smtpServer string = "smtp.gmail.com"
+	smtpPort   string = ":587"
 )
 
 // SendingMessGmail - Отправка сообщения через почту Gmail
@@ -21,11 +21,11 @@ const (
 // SendMail(). Авторизация отправителя береться из .bashrc
 func (g *Gmail) SendingMessGmail(mess string) {
 
-	err := smtp.SendMail(smtpServ+smtpPort,
+	err := smtp.SendMail(smtpServer+smtpPort,
 		smtp.PlainAuth("",
 			os.Getenv("GmailUser"),
 			os.Getenv("GmailPass"),
-			smtpServ),
+			smtpServer),
 		os.Getenv("GmailUser"),
 		[]string{g.Recipient},
 		[]byte(subject+mess))
