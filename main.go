@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"flag"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -45,6 +46,23 @@ func main() {
 	//
 	//
 	// Итерация запросов
+	if *httpRequest != "" {
+		url := &URL{*httpRequest, "URL"}
+		fmt.Println(url.URLRequestGet())
+		return
+	}
+	if *pingRequest != "" {
+		url := &URL{*pingRequest, "URL"}
+		fmt.Println(url.URLRequestPing())
+		return
+	}
 	TimeStartTick(result)
+	//
+	//
+	//
+	//
+	//
+	//
+	//
 
 }
