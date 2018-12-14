@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"os"
 	"time"
@@ -11,9 +10,6 @@ import (
 // result принимает параметры в формате json
 // second задержка цикла for
 func TimeStartTick(result map[string]interface{}) int {
-
-	logCommand := flag.Bool("L", false, "Вывод логов в командной строке: по умолчанию false")
-	flag.Parse()
 
 	second := time.Duration(result["request_frequency"].(float64)) * time.Second
 

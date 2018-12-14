@@ -2,12 +2,16 @@ package main
 
 import (
 	"encoding/json"
+	"flag"
 	"io/ioutil"
 	"log"
 	"os"
 )
 
 func main() {
+
+	// Парсинг аргументов
+	flag.Parse()
 
 	// Лог приложения
 	errorHandle, err := os.OpenFile("NS_err.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
