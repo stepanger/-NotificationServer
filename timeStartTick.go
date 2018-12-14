@@ -1,6 +1,8 @@
 package main
 
 import (
+	"flag"
+	"fmt"
 	"os"
 	"time"
 )
@@ -9,6 +11,9 @@ import (
 // result принимает параметры в формате json
 // second задержка цикла for
 func TimeStartTick(result map[string]interface{}) int {
+
+	logCommand := flag.Bool("L", false, "Вывод логов в командной строке: по умолчанию false")
+	flag.Parse()
 
 	second := time.Duration(result["request_frequency"].(float64)) * time.Second
 
@@ -38,24 +43,36 @@ func TimeStartTick(result map[string]interface{}) int {
 			log, err := url.URLRequestGet()
 			if err != nil {
 				Error.Println(log, err)
+				if *logCommand {
+					fmt.Println(log, err)
+				}
 				if effort == fail {
 					NotifyLinux("Get Сервер не отвечает")
 					gmail.SendingMessGmail("GET "+log+err.Error(), user)
 				}
 			} else {
 				Info.Println(log)
+				if *logCommand {
+					fmt.Println(log)
+				}
 			}
 		}
 		if ping {
 			log, err := url.URLRequestPing()
 			if err != nil {
 				Error.Println(log, err)
+				if *logCommand {
+					fmt.Println(log, err)
+				}
 				if effort == fail {
 					NotifyLinux("Ping Сервер не отвечает")
 					gmail.SendingMessGmail("PING "+log+err.Error(), user)
 				}
 			} else {
 				Info.Println(log)
+				if *logCommand {
+					fmt.Println(log)
+				}
 			}
 		}
 		if !get && !ping {
